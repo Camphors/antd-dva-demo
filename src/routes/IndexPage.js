@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 14:14:13
- * @LastEditTime: 2020-10-19 17:10:40
+ * @LastEditTime: 2020-10-20 17:19:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\IndexPage.js
@@ -70,8 +70,8 @@ function IndexPage() {
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
-              padding: 24,
+              margin: 20,
+              padding: 0,
               minHeight: 280,
             }}
           >

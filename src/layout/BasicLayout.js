@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 14:33:33
- * @LastEditTime: 2020-10-19 16:19:59
+ * @LastEditTime: 2020-10-20 17:16:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\layout\BasicLayout.js
@@ -54,11 +54,7 @@ class SiderDemo extends React.Component {
           </Header>
           <Content
             className="site-layout-background"
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 280,
-            }}
+            
           >
             Content
           </Content>
