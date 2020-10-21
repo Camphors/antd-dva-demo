@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 17:05:25
- * @LastEditTime: 2020-10-20 18:40:58
+ * @LastEditTime: 2020-10-21 10:24:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\roles.js
@@ -12,9 +12,9 @@ import RoleList from '../components/RoleList'
 import RoleModal from '../components/RoleModal'
 import PropTypes from 'prop-types'
 
-const Roles = ({ dispatch, roles, visible }) => {
+const Roles = ({ dispatch, roles }) => {
   const modalProps = {
-    visible,
+    visible: roles.visible,
     handleOk (data) {
     },
     handleCancel (data) {
@@ -23,7 +23,7 @@ const Roles = ({ dispatch, roles, visible }) => {
   }
 
   const listProps = {
-    roles,
+    roles: roles.roles,
     handleDelete (key, data) {
       console.log(data)
       dispatch({
@@ -39,26 +39,9 @@ const Roles = ({ dispatch, roles, visible }) => {
     }
   }
 
-  // function handleDelete(key, record) {
-  //   console.log(123)
-  //   dispatch({
-  //     type: 'roles/delete',
-  //     payload: record.key
-  //   })
-  // }
-
-  // function showEdit(key, record) {
-  //   console.log(record)
-  //   dispatch({
-  //     type: 'roles/edit',
-  //     payload: record
-  //   })
-  // }
-
   return (
     <div>
       <RoleList {...listProps}></RoleList>
-      {/* <RoleList handleDelete={handleDelete}  showEdit={showEdit} roles={roles}></RoleList> */}
       <RoleModal {...modalProps}></RoleModal>
     </div>
   )
@@ -66,16 +49,11 @@ const Roles = ({ dispatch, roles, visible }) => {
 
 Roles.propTypes = {
   dispatch: PropTypes.func,
-  roles: PropTypes.array.isRequired,
-  visible: PropTypes.bool.isRequired,
-  // handleCancel: PropTypes.func,
-  // showEdit: PropTypes.func,
-  // handleOk: PropTypes.func,
-  // handleDelete: PropTypes.func
+  roles: PropTypes.object.isRequired,
 }
 
-function mapStateToProps ({ roles, visible }) {
-  return { roles, visible }
+function mapStateToProps ({ roles }) {
+  return { roles }
 }
  
 // export default connect(({ roles }) => ({

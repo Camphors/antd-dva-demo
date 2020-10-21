@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-20 18:04:18
- * @LastEditTime: 2020-10-20 18:06:07
+ * @LastEditTime: 2020-10-21 15:04:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\components\UserModal.js
@@ -10,7 +10,7 @@ import React from 'react'
 import { Modal, Form, Input, Button, Checkbox } from 'antd'
 import PropTypes from 'prop-types'
 
-const UserModal = ({ visible, handleCancel, handleOk }) => {
+const UserModal = ({ visible, formData, handleCancel, handleOk }) => {
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 }
@@ -20,6 +20,8 @@ const UserModal = ({ visible, handleCancel, handleOk }) => {
     wrapperCol: { offset: 8, span: 16 }
   }
 
+  // const { getFieldDecorator } = form
+
   const onFinish = values => {
     console.log('Success:', values);
   };
@@ -28,59 +30,65 @@ const UserModal = ({ visible, handleCancel, handleOk }) => {
     console.log('Failed:', errorInfo);
   };
 
+  const [form] = Form.useForm()
   return (
     <Modal
       title="编辑用户"
       visible={visible}
-      onOk={handleOk()}
-      onCancel={handleCancel()}
+      okText="确认"
+      cancelText="取消"
+      onOk={() => {
+        form.validateFields().then(values => {
+          form.resetFields()
+          handleOk(values)
+        }).catch(err => {
+          console.log('Validate Error Info:', err)
+        })
+      }}
+      onCancel={() => handleCancel()}
     >
       <Form
       {...layout}
       name="basic"
-      initialValues={{ remember: true }}
+      form={form}
+      initialValues={{ ...formData }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
+        label="key"
+        name="key"
+        hidden
+      >
+      </Form.Item>
+      <Form.Item
         label="用户名"
         name="username"
       >
-        <Input />
+        <Input disabled/>
       </Form.Item>
 
       <Form.Item
         label="角色"
         name="rolename"
-        rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input />
+        <Input/>
       </Form.Item>
 
       <Form.Item
         label="邮箱"
         name="email"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: '请输入邮箱!' }]}
       >
-        <Input />
+        <Input value={formData.email}/>
       </Form.Item>
 
       <Form.Item
         label="手机号"
         name="telephone"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: '请输入手机号!' }]}
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+        <Input value={formData.telephone}/>
       </Form.Item>
     </Form>
     </Modal>
