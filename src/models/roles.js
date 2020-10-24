@@ -1,14 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-10-20 10:08:23
- * @LastEditTime: 2020-10-21 10:19:48
+ * @LastEditTime: 2020-10-23 11:49:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\models\roles.js
  */
 
 import roles from '../mock/roles'
-
 
 export default {
   namespace: 'roles',

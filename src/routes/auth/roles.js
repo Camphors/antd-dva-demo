@@ -8,8 +8,8 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import RoleList from '../components/RoleList'
-import RoleModal from '../components/RoleModal'
+import RoleList from '../../components/RoleList'
+import RoleModal from '../../components/RoleModal'
 import PropTypes from 'prop-types'
 
 const Roles = ({ dispatch, roles }) => {

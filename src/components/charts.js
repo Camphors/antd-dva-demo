@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-21 15:14:52
- * @LastEditTime: 2020-10-21 18:41:57
+ * @LastEditTime: 2020-10-23 16:23:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\components\charts.js
@@ -30,7 +30,7 @@ export default class Pie extends Component {
     const chart = new Chart({
       container: this.props.idName,
       // autoFit: true,
-      height: 500,
+      height: 450,
       width: 550
     });
     chart.data(data);

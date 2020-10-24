@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 16:25:54
- * @LastEditTime: 2020-10-21 18:41:34
+ * @LastEditTime: 2020-10-23 16:21:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\home.js
@@ -10,8 +10,8 @@ import React, { Component } from 'react'
 import { Row, Col } from 'antd';
 import classnames from 'classnames'
 import styles from './home.css'
-import Pie from '../components/charts'
-import Bar from '../components/bar'
+import Pie from '../components/Charts'
+import Bar from '../components/Bar'
 
 export default class home extends Component {
   render() {
@@ -39,18 +39,22 @@ export default class home extends Component {
 
         <Row className={styles['ant-row']} justify="space-between">
           <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'])}>
+            <div className={styles['chart-title']}>数据库表占比</div>
             <Pie idName={PieOne}></Pie>
           </Col>
           <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'])}>
+            <div className={styles['chart-title']}>数据库磁盘占比(GB)</div>
             <Pie idName={PieTwo}></Pie>
           </Col>
         </Row>
 
         <Row className={styles['ant-row']} justify="space-between">
-          <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'])}>
+          <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'], styles['chart-nav'])}>
+            <div className={styles['chart-title']}>表数据量 Top 5</div>
             <Bar idName={BarOne}></Bar>
           </Col>
-          <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'])}>
+          <Col span={11} className={classnames(styles['ant-col'], styles['ant-col-11'], styles['chart-nav'])}>
+            <div className={styles['chart-title']}>表占用空间(GB) Top 5</div>
             <Bar idName={BarTwo}></Bar>
           </Col>
         </Row>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 17:05:20
- * @LastEditTime: 2020-10-21 14:50:48
+ * @LastEditTime: 2020-10-24 14:10:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\users.js
@@ -10,8 +10,8 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Table, Button, Pagination } from 'antd'
 import PropTypes from 'prop-types'
-import UsersList from '../components/UserList'
-import UserModal from '../components/UserModal'
+import UsersList from '../../components/UserList'
+import UserModal from '../../components/UserModal'
 
 function changePageSize() {
   console.log(1)
@@ -70,7 +70,7 @@ const Users = ({ dispatch, users }) => {
 
 Users.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired
+  users: PropTypes.object.isRequired
 }
 
 function mapStateToProps ({ users }) {

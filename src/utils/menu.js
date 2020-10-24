@@ -1,20 +1,26 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 15:25:49
- * @LastEditTime: 2020-10-19 17:17:10
+ * @LastEditTime: 2020-10-24 15:57:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\utils\menu.js
  */
-
- import DashBoard from '../routes/home'
- import Map from '../routes/map'
- import Statistics from '../routes/statistics'
- import Users from '../routes/users'
- import Roles from '../routes/roles'
-
+import Login from '../routes/login'
+import DashBoard from '../routes/home'
+import Map from '../routes/map'
+import Overview from '../routes/overview'
+import Users from '../routes/auth/users'
+import Roles from '../routes/auth/roles'
+import Details from '../routes/details'
  
 const menu = [
+  {
+    path: '/login',
+    key: 'login',
+    exact: true,
+    main: () => <Login></Login>
+  },
   {
     path: '/home',
     key: 'dashboard',
@@ -29,28 +35,33 @@ const menu = [
     main: () => <Map></Map>
   },
   {
-    path: '/statistics',
-    key: 'statistics',
+    path: '/overview',
+    key: 'overview',
     name: '数据总览',
-    main: () => <Statistics></Statistics>
+    main: () => <Overview></Overview>
+  },
+  {
+    path: '/details',
+    key: 'details',
+    main: () => <Details></Details>
   },
   {
     path: '/auth',
     key: 'auth',
     name: '权限管理',
-    main: () => <div>权限管理</div>
-  },
-  {
-    path: '/users',
-    key: 'users',
-    name: '用户管理',
-    main: () => <Users></Users>
-  },
-  {
-    path: '/roles',
-    key: 'roles',
-    name: '角色管理',
-    main: () => <Roles></Roles>
+    redirect: '/auth/users',
+    main: () => <Users></Users>,
+    children: [{
+      path: '/auth/users',
+      key: 'users',
+      name: '用户管理',
+      main: () => <Users></Users>
+    }, {
+      path: '/auth/roles',
+      key: 'roles',
+      name: '角色管理',
+      main: () => <Roles></Roles>
+    }]
   }
 ]
 

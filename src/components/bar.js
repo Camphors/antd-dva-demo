@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-21 15:14:52
- * @LastEditTime: 2020-10-21 18:40:34
+ * @LastEditTime: 2020-10-22 10:33:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\components\charts.js
@@ -74,7 +74,7 @@ export default class Bar extends Component {
   render() {
     return (
       <div>
-        <div id={this.props.idName}></div>
+        <div id={this.props.idName}  style={{padding: '20px'}}></div>
       </div>
     )
   }
