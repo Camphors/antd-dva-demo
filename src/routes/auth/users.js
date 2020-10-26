@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 17:05:20
- * @LastEditTime: 2020-10-24 14:10:27
+ * @LastEditTime: 2020-10-26 16:10:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\users.js
@@ -12,6 +12,7 @@ import { Table, Button, Pagination } from 'antd'
 import PropTypes from 'prop-types'
 import UsersList from '../../components/UserList'
 import UserModal from '../../components/UserModal'
+import { useParams } from 'react-router-dom'
 
 function changePageSize() {
   console.log(1)
@@ -22,6 +23,8 @@ function changePage() {
 }
 
 const Users = ({ dispatch, users }) => {
+  let { params } = useParams()
+  console.log(params)
   const userProps = {
     users: users.users,
     changePage() {

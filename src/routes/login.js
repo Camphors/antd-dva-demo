@@ -1,24 +1,41 @@
 /*
  * @Author: your name
  * @Date: 2020-10-24 14:10:54
- * @LastEditTime: 2020-10-24 18:14:33
+ * @LastEditTime: 2020-10-26 18:08:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\login.js
  */
 import React, { Component } from 'react'
-import { Form, Button, Input, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { Form, Button, Input, Checkbox } from 'antd'
+import { routerRedux } from 'dva/router'
 import styles from './login.css'
+import { connect } from 'dva'
+import { useParams } from 'react-router-dom'
 
-const login = ({dispatch, login}) => {
-  const onFinish = ()  =>{
-    
+const Login = ({dispatch, login}) => {
+  const { loginData } = login
+  const onFinish = values => {
+    localStorage.setItem('user', loginData)
+    dispatch({
+      type: 'login/login',
+      padyload: loginData
+    })
+  };
+
+  const onFinishFailed = ()  =>{
+    console.log(11)
   }
 
   return (
     <div className={styles['login']}>
-      <Form name='normal_login' className={styles['login-form']} initialValues={{ remember: true }} onFinish={onFinish}>
+      <Form 
+        name='basic' 
+        className={styles['login-form']} 
+        initialValues={{ ...loginData }} 
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}>
         <Form.Item name="username" rules={[{required: true, message: '请输入用户名'}]}>
           <Input prefix={<UserOutlined/>} placeholder="用户名" style={{height: '40px'}}></Input>
         </Form.Item>
@@ -29,7 +46,7 @@ const login = ({dispatch, login}) => {
           <Checkbox>记住密码</Checkbox>
         </Form.item> */}
         <Form.Item>
-          <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
+          <Button type="primary" htmlType="submit" className={styles['login-form-button']} onClick={onFinish}>
             登录
           </Button>
         </Form.Item>
@@ -38,4 +55,6 @@ const login = ({dispatch, login}) => {
   )
 }
 
-export default login
+export default connect(({login}) => ({
+  login
+}))(Login)

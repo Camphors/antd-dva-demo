@@ -1,16 +1,18 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 14:14:13
- * @LastEditTime: 2020-10-24 16:24:55
+ * @LastEditTime: 2020-10-26 18:00:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\IndexPage.js
  */
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router'
 import styles from './IndexPage.css';
 import { Layout, Menu, Dropdown } from 'antd';
 import createHistory from 'history/createHashHistory'
+import $$ from 'cmn-utils';
 import {
   BrowserRouter as Router,
   Switch,
@@ -76,85 +78,154 @@ const generateRoute = (data) => {
   return <Route key={data.key} path={data.path} component={data.main} exact={data.exact}></Route>
 }
 
-const dropdownItem = (
-  <Menu>
-    <Menu.Item key="0">
-      <Link to="/login">退出登录</Link>
-    </Menu.Item>
-  </Menu>
-)
 
-function IndexPage() {
-  return (
-    <Layout style={{height:'100%'}}>
-      <Sider trigger={null} collapsible>
-      {/* <Sider trigger={null} collapsible collapsed={this.state.collapsed}> */}
-        <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          {menuItem}
-          {/* <Menu.Item key="1" icon={<BankOutlined />}>
-            <Link to='/home'>
-            数据概览
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<GlobalOutlined />}>
-            <Link to='/map'>
-              数据地图
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<FileTextOutlined />}>
-            <Link to="/overview">数据总览</Link>
-          </Menu.Item>
-          <SubMenu key="4" icon={<LockOutlined />} title="权限管理">
-            <Menu.Item key="5" icon={<UserOutlined />}>
-              <Link to="/users">用户管理</Link>
-            </Menu.Item>
-            <Menu.Item key="6" icon={<UserOutlined />}>
-              <Link to="/roles">角色管理</Link>
-            </Menu.Item>
-          </SubMenu> */}
-        </Menu>
-      </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ paddingLeft: '20px',color: "#000",background: '#ccc' }}>
-          <MenuUnfoldOutlined></MenuUnfoldOutlined>
-          <Dropdown  className={styles['current-login']} overlay={dropdownItem} trigger={['click']}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-              admin 
-              <DownOutlined />
-            </a>
-          </Dropdown>
-        </Header>
-        <Content
-          className="site-layout-background"
-          style={{
-            margin: 20,
-            padding: 0,
-            minHeight: 280,
-          }}
-        >
-          <Switch>
-            {
-              menu.map(item => {
-                return generateRoute(item)
-              })
-            }
-            {/* {menu.map((route, index) => (
-              <Route 
-                key={route.key}
-                path={route.path}
-                exact={route.exact}
-                // component={route.main}
-              ></Route>
-            ))} */}
-          </Switch>
-        </Content>
+class IndexPage extends Component {
+  componentDidMount() {
+    // const user = $$.getStore('user')
+    const user = localStorage.getItem('user')
+    console.log(user)
+    if(!user) {
+      this.props.dispatch(routerRedux.replace('/login'))
+    }
+  }
+  
+  render () {
+    // function logout() {
+    //   $$.setStore('user', null)
+    //   console.log($$.getStore('user'))
+    //   this.props.dispatch({
+    //     type: 'login/logout',
+    //   })
+    // }
+  
+    const dropdownItem = (
+      <Menu>
+        <Menu.Item key="0">
+          {/* <a><Route path="/login">退出登录</Route></a> */}
+          <Link to="/login">
+            退出登录
+            {/* <span onClick={logout}>退出登录</span> */}
+          </Link>
+        </Menu.Item>
+      </Menu>
+    )
+    
+    return (
+      <Layout style={{height:'100%'}}>
+        <Sider trigger={null} collapsible>
+        {/* <Sider trigger={null} collapsible collapsed={this.state.collapsed}> */}
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+            {menuItem}
+          </Menu>
+        </Sider>
+        <Layout className="site-layout">
+          <Header className="site-layout-background" style={{ paddingLeft: '20px',color: "#000",background: '#ccc' }}>
+            <MenuUnfoldOutlined></MenuUnfoldOutlined>
+            <Dropdown  className={styles['current-login']} overlay={dropdownItem} trigger={['click']}>
+              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                admin 
+                <DownOutlined />
+              </a>
+            </Dropdown>
+          </Header>
+          <Content
+            className="site-layout-background"
+            style={{
+              margin: 20,
+              padding: 0,
+              minHeight: 280,
+            }}
+          >
+            <Switch>
+              {
+                menu.map(item => {
+                  return generateRoute(item)
+                })
+              }
+              {/* {menu.map((route, index) => (
+                <Route 
+                  key={route.key}
+                  path={route.path}
+                  exact={route.exact}
+                  // component={route.main}
+                ></Route>
+              ))} */}
+            </Switch>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
-  );
+    );
+  }
 }
 
-IndexPage.propTypes = {
-};
+// const IndexPage = ({dispatch, login}) => {
+  
+//   function logout() {
+//     console.log(1)
+//     this.props.dispatch({
+//       type: 'login/logout',
+//     })
+    
+//   }
 
-export default connect()(IndexPage);
+//   const dropdownItem = (
+//     <Menu>
+//       <Menu.Item key="0">
+//         {/* <a><Route path="/login">退出登录</Route></a> */}
+//         <a onClick={logout}>退出登录</a>
+//       </Menu.Item>
+//     </Menu>
+//   )
+
+//   return (
+//     <Layout style={{height:'100%'}}>
+//       <Sider trigger={null} collapsible>
+//       {/* <Sider trigger={null} collapsible collapsed={this.state.collapsed}> */}
+//         <div className="logo" />
+//         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+//           {menuItem}
+//         </Menu>
+//       </Sider>
+//       <Layout className="site-layout">
+//         <Header className="site-layout-background" style={{ paddingLeft: '20px',color: "#000",background: '#ccc' }}>
+//           <MenuUnfoldOutlined></MenuUnfoldOutlined>
+//           <Dropdown  className={styles['current-login']} overlay={dropdownItem} trigger={['click']}>
+//             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+//               admin 
+//               <DownOutlined />
+//             </a>
+//           </Dropdown>
+//         </Header>
+//         <Content
+//           className="site-layout-background"
+//           style={{
+//             margin: 20,
+//             padding: 0,
+//             minHeight: 280,
+//           }}
+//         >
+//           <Switch>
+//             {
+//               menu.map(item => {
+//                 return generateRoute(item)
+//               })
+//             }
+//             {/* {menu.map((route, index) => (
+//               <Route 
+//                 key={route.key}
+//                 path={route.path}
+//                 exact={route.exact}
+//                 // component={route.main}
+//               ></Route>
+//             ))} */}
+//           </Switch>
+//         </Content>
+//       </Layout>
+//     </Layout>
+//   );
+// }
+
+export default connect(({login}) => {
+  login
+})(IndexPage);
