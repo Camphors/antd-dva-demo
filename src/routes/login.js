@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-24 14:10:54
- * @LastEditTime: 2020-10-26 18:08:00
+ * @LastEditTime: 2020-10-27 16:17:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\login.js
@@ -9,18 +9,15 @@
 import React, { Component } from 'react'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { Form, Button, Input, Checkbox } from 'antd'
-import { routerRedux } from 'dva/router'
 import styles from './login.css'
 import { connect } from 'dva'
-import { useParams } from 'react-router-dom'
 
 const Login = ({dispatch, login}) => {
   const { loginData } = login
   const onFinish = values => {
-    localStorage.setItem('user', loginData)
     dispatch({
       type: 'login/login',
-      padyload: loginData
+      payload: loginData
     })
   };
 

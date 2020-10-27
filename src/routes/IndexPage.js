@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-19 14:14:13
- * @LastEditTime: 2020-10-26 18:00:09
+ * @LastEditTime: 2020-10-27 16:13:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\routes\IndexPage.js
@@ -11,15 +11,11 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router'
 import styles from './IndexPage.css';
 import { Layout, Menu, Dropdown } from 'antd';
-import createHistory from 'history/createHashHistory'
 import $$ from 'cmn-utils';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
-  HashRouter
+  Link
 } from "react-router-dom";
 import menu from '../utils/menu'
 
@@ -32,13 +28,14 @@ import {
   VideoCameraOutlined,
   GlobalOutlined,
   FileTextOutlined,
-  LockOutlined
+  LockOutlined,
+  Icon
 } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import { createBrowserHistory } from "history"
 
+const history = createBrowserHistory()
 const { Header, Sider, Content } = Layout;
-// 页面刷新后不会报错
-const history = createHistory()
 
 // 获取动态菜单
 const getMenus = (list ) => {
@@ -75,40 +72,33 @@ const generateRoute = (data) => {
       </Switch>
     )
   }
-  return <Route key={data.key} path={data.path} component={data.main} exact={data.exact}></Route>
+  return <Route key={data.key} path={data.path} component={data.component} exact={data.exact}></Route>
 }
 
 
 class IndexPage extends Component {
   componentDidMount() {
-    // const user = $$.getStore('user')
-    const user = localStorage.getItem('user')
-    console.log(user)
+    const user = $$.getStore('user')
     if(!user) {
       this.props.dispatch(routerRedux.replace('/login'))
     }
   }
   
   render () {
-    // function logout() {
-    //   $$.setStore('user', null)
-    //   console.log($$.getStore('user'))
-    //   this.props.dispatch({
-    //     type: 'login/logout',
-    //   })
-    // }
-  
+    function logout() {
+      $$.removeStore('user')
+      history.push('/login')
+      history.go()
+    }
+    
     const dropdownItem = (
       <Menu>
         <Menu.Item key="0">
-          {/* <a><Route path="/login">退出登录</Route></a> */}
-          <Link to="/login">
-            退出登录
-            {/* <span onClick={logout}>退出登录</span> */}
-          </Link>
+          <span onClick={logout}>退出登录</span>
         </Menu.Item>
       </Menu>
     )
+    
     
     return (
       <Layout style={{height:'100%'}}>
@@ -143,14 +133,6 @@ class IndexPage extends Component {
                   return generateRoute(item)
                 })
               }
-              {/* {menu.map((route, index) => (
-                <Route 
-                  key={route.key}
-                  path={route.path}
-                  exact={route.exact}
-                  // component={route.main}
-                ></Route>
-              ))} */}
             </Switch>
           </Content>
         </Layout>
@@ -161,13 +143,12 @@ class IndexPage extends Component {
 
 // const IndexPage = ({dispatch, login}) => {
   
-//   function logout() {
-//     console.log(1)
-//     this.props.dispatch({
-//       type: 'login/logout',
-//     })
-    
-//   }
+  // function logout() {
+  //   console.log(1)
+  //   dispatch({
+  //     type: 'login/logout',
+  //   })
+  // }
 
 //   const dropdownItem = (
 //     <Menu>

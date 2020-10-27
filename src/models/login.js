@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-24 18:08:43
- * @LastEditTime: 2020-10-26 18:17:26
+ * @LastEditTime: 2020-10-27 16:01:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \antd-dva-demo\src\models\user.js
@@ -9,6 +9,10 @@
 import { routerRedux } from 'dva/router'
 import $$ from 'cmn-utils';
 import { login } from '../services/login'
+// import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from "history"
+
+const history = createBrowserHistory()
 
 export default{
   namespace: 'login',
@@ -38,8 +42,10 @@ export default{
       const { status, message, data } = yield call(login, payload);
       try {
         if (status) {
-          $$.setStore('user', payload)
-          yield put(routerRedux.push({pathname: '/home'}))
+          $$.setStore('user', JSON.stringify(payload))
+          history.push("/home");
+          history.go()
+          // yield put(routerRedux.push({pathname: '/home'}))
         }
       }
       catch (err) {
